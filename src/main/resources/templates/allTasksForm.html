@@ -51,12 +51,10 @@
             }
         }
     </script>
-    <title>Главная страница</title>
+    <title>Все задачи</title>
 
 </head>
 <body>
-
-
 <nav class="navbar sticky-top navbar-expand-lg bg-info">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/index}">TODO LIST</a>
@@ -83,10 +81,11 @@
     </div>
 </nav>
 
+
 <div class="container-fluid" style="padding: 10px 10px">
     <div class="card">
         <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin-left: 20px; margin-right: 20px; margin-top: 10px">
-            <button type="button" class="btn btn-info btn-outline" >Сортировка по:</button>
+            <button type="button" class="btn btn-info" >Сортировка по:</button>
             <button type="button" class="btn btn-info btn-outline-dark" onclick="sortTable(0)">ID</button>
             <button type="button" class="btn btn-info btn-outline-dark" onclick="sortTable(2)">Дате</button>
             <button type="button" class="btn btn-info btn-outline-dark" onclick="sortTable(3)">Статусу</button>
@@ -115,7 +114,7 @@
                         <p class="fw-normal text-center" th:text="${#temporals.format(task.getCreated(), 'dd-MM-yyyy HH:mm')}"></p>
                     </th>
                     <th scope="row">
-                        <div class="fw-normal text-center">
+                        <div class="text-center fw-normal">
                             <p th:if="${task.isDone()}">
                                 Выполнено
                             </p>

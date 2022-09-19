@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <title th:text="|Задача ID (${thisTask.getId()})|"></title>
+
+</head>
+<body>
+<nav class="navbar sticky-top navbar-expand-lg bg-info">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">TODO LIST</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Список задач
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/allTasks}">Все</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/allNewTasks}">Новые</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/allDoneTasks}">Выполненные</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <a class="btn btn-primary btn btn-success btn-sm" th:href="@{/addTask}" role="button" style="margin-right: 20px">Добавить задачу</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid text-center" style="padding: 200px 300px">
+    <div class="card">
+        <div class="card-header">
+            <h4 th:text="|Задача ID: ${thisTask.getId()}|"></h4>
+        </div>
+        <div class="card-body">
+            <form class="form-floating" id="inputDisabled" th:object="${thisTask}">
+                <input type="number" hidden th:field="*{id}" th:name="id"/>
+                <input type="datetime-local" hidden th:field="*{created}" th:name="created"/>
+                <div class="mb-3" style="font-size: 20px; font-weight: bold">
+                    <label for="description" class="form-label"> Описание
+                    </label>
+                    <textarea class="form-control" disabled rows="5" th:field="*{description}" th:name="description" id="description"></textarea>
+                    <br>
+                    <label for="isDone" class="form-check-label"> Статус
+                    </label>
+                    <input class="form-check-input" disabled type="checkbox" th:field="*{done}" th:name="done" id="isDone">
+                </div>
+            </form>
+            <div class="card">
+                <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin: 20px">
+                    <form class="btn-group" th:method="POST" th:action="@{|/executeTask/${thisTask.getId()}|}" style="width: 100%">
+                        <button class="btn btn-success" role="button" style="color: whitesmoke">Выполнить</button>
+                    </form>
+
+                    <form class="btn-group" th:method="POST" th:action="@{|/deleteTask/${thisTask.getId()}|}" style="color: black; width: 100%">
+                        <button class="btn btn-danger" role="button" style="color: whitesmoke">Удалить</button>
+                    </form>
+
+                    <form class="btn-group" th:method="GET" th:action="@{|/editTask/${thisTask.getId()}|}" style="width: 100%">
+                        <button class="btn btn-secondary" role="button" style="color: whitesmoke">Редактировать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
