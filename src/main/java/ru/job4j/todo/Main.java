@@ -8,27 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.io.InputStream;
-import java.util.Properties;
-
 @SpringBootApplication
 public class Main {
-    private Properties loadDBProperties() {
-        Properties cfg = new Properties();
-        try (InputStream in = Main.class.getClassLoader().getResourceAsStream(
-                "db.properties")) {
-            cfg.load(in);
-        } catch (Exception exc) {
-            exc.printStackTrace();
-        }
-        try {
-            Class.forName(cfg.getProperty("jdbc.driver"));
-        } catch (Exception exc) {
-            exc.printStackTrace();
-        }
-        return cfg;
-    }
-
     @Bean(destroyMethod = "close")
     public SessionFactory sf() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
