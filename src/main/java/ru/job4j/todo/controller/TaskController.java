@@ -55,10 +55,6 @@ public class TaskController {
     @GetMapping("/editTask/{taskID}")
     public String updateTask(@PathVariable("taskID") int taskID, Model model) {
         Optional<Task> optionalTask = taskService.findById(taskID);
-        if (optionalTask.isEmpty()) {
-            model.addAttribute("errorMessage", "Пользователь не найден");
-            return "errorPage";
-        }
         model.addAttribute("editTask", optionalTask.get());
         return "editTaskPage";
     }
@@ -72,10 +68,6 @@ public class TaskController {
     @GetMapping("/tasks/{taskID}")
     public String taskPage(@PathVariable("taskID") int taskID, Model model) {
         Optional<Task> optionalTask = taskService.findById(taskID);
-        if (optionalTask.isEmpty()) {
-            model.addAttribute("errorMessage", "Пользователь не найден");
-            return "errorPage";
-        }
         model.addAttribute("thisTask", optionalTask.get());
         return "taskPage";
     }
@@ -83,10 +75,6 @@ public class TaskController {
     @PostMapping("/executeTask/{taskID}")
     public String executeTask(@PathVariable("taskID") int taskID, Model model) {
         Optional<Integer> result = taskService.executeDone(taskID);
-        if (result.isEmpty()) {
-            model.addAttribute("errorMessage", "Пометить задачу как \"выполненная\" не получилось");
-            return "errorPage";
-        }
         model.addAttribute("successMessage", "Задача выполнена успешна");
         return "successPage";
     }
@@ -94,10 +82,6 @@ public class TaskController {
     @PostMapping("/deleteTask/{taskID}")
     public String deleteTask(@PathVariable("taskID") int taskID, Model model) {
         Optional<Integer> result = taskService.delete(taskID);
-        if (result.isEmpty()) {
-            model.addAttribute("errorMessage", "Удалить задачу не удалось");
-            return "errorPage";
-        }
         model.addAttribute("successMessage", "Задача удалена успешно");
         return "successPage";
     }

@@ -16,63 +16,60 @@
 
 </head>
 <body>
-<nav class="navbar sticky-top navbar-expand-lg bg-info">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/index}">TODO LIST</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Список задач
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/allTasks}">Все</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" th:href="@{/allNewTasks}">Новые</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" th:href="@{/allDoneTasks}">Выполненные</a></li>
-                    </ul>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/allTasks}">Все</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/allNewTasks}">Новые</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/allDoneTasks}">Выполненные</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/addTask}" role="button" style="margin-right: 20px">Добавить задачу</a>
                 </li>
             </ul>
-            <a class="btn btn-primary btn btn-success btn-sm" th:href="@{/addTask}" role="button" style="margin-right: 20px">Добавить задачу</a>
         </div>
     </div>
 </nav>
 
-<div class="container-fluid text-center" style="padding: 200px 300px">
+<div class="container-fluid text-center">
     <div class="card">
         <div class="card-header">
-            <h4 th:text="|Задача ID: ${thisTask.getId()}|"></h4>
+            <p th:text="|Задача ID: ${thisTask.getId()}|"></p>
         </div>
         <div class="card-body">
             <form class="form-floating" id="inputDisabled" th:object="${thisTask}">
-                <input type="number" hidden th:field="*{id}" th:name="id"/>
-                <input type="datetime-local" hidden th:field="*{created}" th:name="created"/>
-                <div class="mb-3" style="font-size: 20px; font-weight: bold">
-                    <label for="description" class="form-label"> Описание
-                    </label>
-                    <textarea class="form-control" disabled rows="5" th:field="*{description}" th:name="description" id="description"></textarea>
+                <input type="number" hidden th:field="*{id}" name="id"/>
+                <input type="datetime-local" hidden th:field="*{created}" name="created"/>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Описание</label>
+                    <textarea class="form-control" disabled rows="5" th:field="*{description}" name="description" id="description"></textarea>
                     <br>
-                    <label for="isDone" class="form-check-label"> Статус
-                    </label>
-                    <input class="form-check-input" disabled type="checkbox" th:field="*{done}" th:name="done" id="isDone">
+                    <label for="isDone" class="form-check-label">Статус</label>
+                    <input class="form-check-input" disabled type="checkbox" th:field="*{done}" name="done" id="isDone">
                 </div>
             </form>
             <div class="card">
                 <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin: 20px">
                     <form class="btn-group" th:method="POST" th:action="@{|/executeTask/${thisTask.getId()}|}" style="width: 100%">
-                        <button class="btn btn-success" role="button" style="color: whitesmoke">Выполнить</button>
+                        <button class="btn btn-success" role="button">Выполнить</button>
                     </form>
 
-                    <form class="btn-group" th:method="POST" th:action="@{|/deleteTask/${thisTask.getId()}|}" style="color: black; width: 100%">
-                        <button class="btn btn-danger" role="button" style="color: whitesmoke">Удалить</button>
+                    <form class="btn-group" th:method="POST" th:action="@{|/deleteTask/${thisTask.getId()}|}" style="width: 100%">
+                        <button class="btn btn-danger" role="button">Удалить</button>
                     </form>
 
                     <form class="btn-group" th:method="GET" th:action="@{|/editTask/${thisTask.getId()}|}" style="width: 100%">
-                        <button class="btn btn-secondary" role="button" style="color: whitesmoke">Редактировать</button>
+                        <button class="btn btn-secondary" role="button">Редактировать</button>
                     </form>
                 </div>
             </div>

@@ -45,6 +45,7 @@ public class TaskService {
     public Optional<Task> findById(int id) {
         return taskStore.findById(id);
     }
+
     public List<Task> getAll() {
         return taskStore.getAllTask();
     }

@@ -12,8 +12,9 @@ import org.springframework.context.annotation.Bean;
 public class Main {
     @Bean(destroyMethod = "close")
     public SessionFactory sf() {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        return new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        return sf;
     }
 
     public static void main(String[] args) {
