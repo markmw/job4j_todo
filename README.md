@@ -17,3 +17,28 @@
 2. Maven
 3. PostgreSql
 4. Git
+
+Главная страница:
+![Settings Windows](https://raw.github.com/markmw/job4j_todo/master/src/main/resources/images/main_page.png)
+
+Страница всех задач со статусом Новый:
+![Settings Windows](https://raw.github.com/markmw/job4j_todo/master/src/main/resources/images/new_tasks_page.png)
+
+Страница всех задач со статусом Выполненные:
+![Settings Windows](https://raw.github.com/markmw/job4j_todo/master/src/main/resources/images/done_tasks_page.png)
+
+Страница добавления задачи:
+![Settings Windows](https://raw.github.com/markmw/job4j_todo/master/src/main/resources/images/add_task_page.png)
+
+Страница для изменения статуса задачи:
+![Settings Windows](https://raw.github.com/markmw/job4j_todo/master/src/main/resources/images/change_status_page.png)
+
+Страница редактирования задачи:
+![Settings Windows](https://raw.github.com/markmw/job4j_todo/master/src/main/resources/images/edit_page.png)
+
+Результаты:
+Успешно Выполнено:
+![Settings Windows](https://raw.github.com/markmw/job4j_todo/master/src/main/resources/images/done_status_page.png)
+
+Успешно удалено:
+![Settings Windows](https://raw.github.com/markmw/job4j_todo/master/src/main/resources/images/delete_status_page.png)
