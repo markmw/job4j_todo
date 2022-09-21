@@ -6,9 +6,21 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 @Component
 public class AuthFilter implements Filter {
+    private static final Set<String> MAPPING_SET = Set.of(
+            "loginPage",
+            "login",
+            "formAddUser",
+            "registration"
+    );
+
+    private boolean isMapping(String uri) {
+        return MAPPING_SET.stream().anyMatch(uri::endsWith);
+    }
+
     @Override
     public void doFilter(
             ServletRequest request,
@@ -18,10 +30,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
-        if (uri.endsWith("loginPage")
-                || uri.endsWith("login")
-                || uri.endsWith("formAddUser")
-                || uri.endsWith("/registration")) {
+        if (isMapping(uri)) {
             chain.doFilter(req, res);
             return;
         }
