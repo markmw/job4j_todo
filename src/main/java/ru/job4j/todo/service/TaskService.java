@@ -13,29 +13,15 @@ import java.util.Optional;
 public class TaskService {
     private final TaskStore taskStore;
 
-    public Optional<Integer> executeDone(int id) {
-        Optional<Integer> result;
-        int res = taskStore.executeDone(id);
-        if (res != 0) {
-            result = Optional.of(res);
-        } else {
-            result = Optional.empty();
-        }
-        return result;
+    public void executeDone(int id) {
+        taskStore.executeDone(id);
     }
-    public Optional<Integer> delete(int id) {
-        Optional<Integer> result;
-        int res = taskStore.delete(id);
-        if (res != 0) {
-            result = Optional.of(res);
-        } else {
-            result = Optional.empty();
-        }
-        return result;
+    public void delete(int id) {
+        taskStore.delete(id);
     }
 
-    public int update(Task task) {
-        return taskStore.update(task);
+    public void update(Task task) {
+        taskStore.update(task);
     }
 
     public Task add(Task task) {

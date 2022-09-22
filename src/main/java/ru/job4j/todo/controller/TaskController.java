@@ -69,7 +69,8 @@ public class TaskController {
     }
 
     @PostMapping("/editTask")
-    public String editTask(@ModelAttribute Task task) {
+    public String editTask(@ModelAttribute Task task, Model model, HttpSession session) {
+        GetUserView.getUserView(model, session);
         taskService.update(task);
         return "redirect:index";
     }
@@ -85,7 +86,7 @@ public class TaskController {
     @PostMapping("/executeTask/{taskID}")
     public String executeTask(@PathVariable("taskID") int taskID, Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
-        Optional<Integer> result = taskService.executeDone(taskID);
+        taskService.executeDone(taskID);
         model.addAttribute("successMessage", "Задача выполнена успешна");
         return "successPage";
     }
@@ -93,7 +94,7 @@ public class TaskController {
     @PostMapping("/deleteTask/{taskID}")
     public String deleteTask(@PathVariable("taskID") int taskID, Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
-        Optional<Integer> result = taskService.delete(taskID);
+        taskService.delete(taskID);
         model.addAttribute("successMessage", "Задача удалена успешно");
         return "successPage";
     }
