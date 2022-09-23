@@ -1,17 +1,19 @@
 package ru.job4j.todo.model;
 
 import lombok.*;
-
+import lombok.EqualsAndHashCode.Include;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
+@Data
 @Entity
 @Table(name = "tasks")
-@EqualsAndHashCode(of = "id")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Include
     private int id;
     private String description;
     private LocalDateTime created = LocalDateTime.now();
@@ -19,15 +21,11 @@ public class Task {
             DateTimeFormatter.ofPattern("dd-MM-EEEE-yyyy HH:mm:ss");
     private boolean done;
 
-    public Task() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Override
-    public String toString() {
-        return "Task{"
-                + "id=" + id + ", description='" + description + '\''
-                + ", created=" + FORMATTER.format(created)
-                + ", done=" + done + '}';
+    public Task() {
     }
 
     public int getId() {
@@ -60,5 +58,41 @@ public class Task {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Task task = (Task) o;
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{"
+                + "id=" + id
+                + ", description='" + description + '\''
+                + ", created=" + created
+                + ", done=" + done
+                + ", user=" + user
+                + '}';
     }
 }

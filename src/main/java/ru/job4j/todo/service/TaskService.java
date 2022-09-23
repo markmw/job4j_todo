@@ -32,15 +32,15 @@ public class TaskService {
         return taskStore.findById(id);
     }
 
-    public List<Task> getAll() {
-        return taskStore.getAllTask();
+    public List<Task> getAll(int user_id) {
+        return taskStore.getAllTask(user_id);
     }
 
-    public List<Task> getDone() {
-        return taskStore.getDone();
+    public List<Task> getDone(int user_id) {
+        return taskStore.getDone(user_id);
     }
 
-    public List<Task> getNew() {
-        return taskStore.getNew();
+    public List<Task> getNew(int user_id) {
+        return taskStore.getNew(user_id);
     }
 }

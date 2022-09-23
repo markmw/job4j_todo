@@ -11,3 +11,5 @@ CREATE TABLE todo_user(
     login varchar(255) NOT NULL UNIQUE,
     password TEXT NOT NULL
 );
+
+ALTER TABLE tasks ADD COLUMN user_id int REFERENCES todo_user(id);

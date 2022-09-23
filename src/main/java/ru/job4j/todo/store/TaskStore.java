@@ -42,21 +42,23 @@ public class TaskStore {
         return task;
     }
 
-    public List<Task> getAllTask() {
-        return crudRepository.query("from Task", Task.class);
-    }
-
-    private List<Task> getByCondDone(boolean cond) {
-        return crudRepository.query("from Task where done = :fDone",
+    public List<Task> getAllTask(int user_id) {
+        return crudRepository.query("from Task where user_id = :fUser_id",
                 Task.class,
-                Map.of("fDone", cond));
+                Map.of("fUser_id", user_id));
     }
 
-    public List<Task> getDone() {
-        return getByCondDone(true);
+    private List<Task> getByCondDone(boolean cond, int user_id) {
+        return crudRepository.query("from Task where done = :fDone and user_id = :fUser_id",
+                Task.class,
+                Map.of("fDone", cond, "fUser_id", user_id));
     }
 
-    public List<Task> getNew() {
-        return getByCondDone(false);
+    public List<Task> getDone(int user_id) {
+        return getByCondDone(true, user_id);
+    }
+
+    public List<Task> getNew(int user_id) {
+        return getByCondDone(false, user_id);
     }
 }

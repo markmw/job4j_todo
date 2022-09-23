@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.TaskService;
 import ru.job4j.todo.util.GetUserView;
 
@@ -22,28 +23,36 @@ public class TaskController {
     @GetMapping("/index")
     public String index(Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
-        model.addAttribute("allTasks", taskService.getAll());
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("allTasks", taskService.getAll(user.getId()));
+        model.addAttribute("user", user);
         return "index";
     }
 
     @GetMapping("/allTasks")
     public String allTasks(Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
-        model.addAttribute("allTasks", taskService.getAll());
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("allTasks", taskService.getAll(user.getId()));
+        model.addAttribute("user", user);
         return "allTasksForm";
     }
 
     @GetMapping("/allNewTasks")
     public String allNewTasks(Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
-        model.addAttribute("newTasks", taskService.getNew());
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("newTasks", taskService.getNew(user.getId()));
+        model.addAttribute("user", user);
         return "allNewTasksForm";
     }
 
     @GetMapping("/allDoneTasks")
     public String allDoneTasks(Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
-        model.addAttribute("doneTasks", taskService.getDone());
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("doneTasks", taskService.getDone(user.getId()));
+        model.addAttribute("user", user);
         return "allDoneTasksForm";
     }
 
@@ -56,6 +65,8 @@ public class TaskController {
     @PostMapping("/addTask")
     public String addTask(@ModelAttribute Task task, Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
+        User user = (User) session.getAttribute("user");
+        task.setUser(user);
         taskService.add(task);
         return "redirect:index";
     }
