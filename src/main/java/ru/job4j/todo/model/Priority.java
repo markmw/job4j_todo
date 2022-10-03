@@ -1,23 +1,25 @@
 package ru.job4j.todo.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode.Include;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "todo_user")
-public class User {
+@Table(name = "priorities")
+public class Priority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Include
+    @EqualsAndHashCode.Include
     private int id;
-    private String name;
-    private String login;
-    private String password;
 
-    public User() {
+    private String name;
+    private int position;
+
+    public Priority() {
     }
 
     public int getId() {
@@ -36,29 +38,20 @@ public class User {
         this.name = name;
     }
 
-    public String getLogin() {
-        return login;
+    public int getPosition() {
+        return position;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
     public String toString() {
-        return "User{"
+        return "Priority{"
                 + "id=" + id
                 + ", name='" + name + '\''
-                + ", login='" + login + '\''
-                + ", password='" + password + '\''
+                + ", position=" + position
                 + '}';
     }
 
@@ -70,12 +63,12 @@ public class User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User user = (User) o;
-        return Objects.equals(login, user.login) && Objects.equals(password, user.password);
+        Priority priority = (Priority) o;
+        return id == priority.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password);
+        return Objects.hash(id);
     }
 }

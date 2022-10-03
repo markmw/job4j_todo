@@ -25,6 +25,10 @@ public class Task {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
+
     public Task() {
     }
 
@@ -68,6 +72,14 @@ public class Task {
         this.user = user;
     }
 
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -93,6 +105,7 @@ public class Task {
                 + ", created=" + created
                 + ", done=" + done
                 + ", user=" + user
+                + ", priority=" + priority
                 + '}';
     }
 }

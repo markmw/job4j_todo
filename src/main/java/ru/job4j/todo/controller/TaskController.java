@@ -3,10 +3,8 @@ package ru.job4j.todo.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.TaskService;
@@ -59,11 +57,14 @@ public class TaskController {
     @GetMapping("/addTask")
     public String addTaskForm(Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
+        model.addAttribute("priorities", taskService.findAll());
         return "addTaskForm";
     }
 
     @PostMapping("/addTask")
-    public String addTask(@ModelAttribute Task task, Model model, HttpSession session) {
+    public String addTask(@ModelAttribute Task task,
+                          Model model,
+                          HttpSession session) {
         GetUserView.getUserView(model, session);
         User user = (User) session.getAttribute("user");
         task.setUser(user);
@@ -72,10 +73,13 @@ public class TaskController {
     }
 
     @GetMapping("/editTask/{taskID}")
-    public String updateTask(@PathVariable("taskID") int taskID, Model model, HttpSession session) {
+    public String updateTask(@PathVariable("taskID") int taskID,
+                             Model model,
+                             HttpSession session) {
         GetUserView.getUserView(model, session);
         Optional<Task> optionalTask = taskService.findById(taskID);
         model.addAttribute("editTask", optionalTask.get());
+        model.addAttribute("priorities", taskService.findAll());
         return "editTaskPage";
     }
 

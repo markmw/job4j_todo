@@ -63,6 +63,7 @@
                 <th scope="col">Описание</th>
                 <th scope="col">Дата</th>
                 <th scope="col">Статус</th>
+                <th scope="col">Приоритет</th>
                 </thead>
                 <tbody>
                 <tr th:each="task : ${doneTasks}">
@@ -84,6 +85,9 @@
                                 Выполнено
                             </p>
                         </div>
+                    </th>
+                    <th scope="row">
+                        <p class="fw-normal" th:text="${task.getPriority().name}"></p>
                     </th>
                 </tr>
                 </tbody>

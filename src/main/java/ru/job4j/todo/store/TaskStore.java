@@ -32,7 +32,7 @@ public class TaskStore {
     }
 
     public Optional<Task> findById(int id) {
-        return crudRepository.optional("from Task where id = :fId",
+        return crudRepository.optional("from Task t join fetch t.priority where t.id = :fId",
                 Task.class,
                 Map.of("fId", id));
     }
@@ -43,13 +43,15 @@ public class TaskStore {
     }
 
     public List<Task> getAllTask(int user_id) {
-        return crudRepository.query("from Task where user_id = :fUser_id",
+        return crudRepository.query(
+                "from Task t join fetch t.priority where user_id = :fUser_id",
                 Task.class,
                 Map.of("fUser_id", user_id));
     }
 
     private List<Task> getByCondDone(boolean cond, int user_id) {
-        return crudRepository.query("from Task where done = :fDone and user_id = :fUser_id",
+        return crudRepository.query(
+                "from Task t join fetch t.priority where done = :fDone and user_id = :fUser_id",
                 Task.class,
                 Map.of("fDone", cond, "fUser_id", user_id));
     }

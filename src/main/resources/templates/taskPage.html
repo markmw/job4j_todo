@@ -66,6 +66,11 @@
                     <br>
                     <label for="isDone" class="form-check-label">Статус</label>
                     <input class="form-check-input" disabled type="checkbox" th:field="*{done}" name="done" id="isDone">
+                    <br>
+                    <label for="priority" class="form-label">Приоритет</label>
+                    <input class="form-control" th:field="*{priority.name}" id="priority" disabled="disabled">
+                    <br>
+                    <br>
                 </div>
             </form>
             <div class="card">

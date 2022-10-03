@@ -66,6 +66,13 @@
                     <br>
                     <label for="isDone" class="form-check-label">Статус</label>
                     <input type="checkbox" class="form-check-input" th:field="*{done}" th:name="done" id="isDone">
+                    <br>
+                    <label for="priority" class="form-label">Приоритет</label>
+                    <select class="form-control" id="priority.id" name="priority.id">
+                        <option th:each="priority : ${priorities}" th:value="${priority.id}" th:text="${priority.name}" id="priority"></option>
+                    </select>
+                    <br>
+                    <br>
                 </div>
                 <input class="btn btn-info" value="Изменить задачу" th:type="submit" th:form="input">
             </form>

@@ -66,6 +66,15 @@
                         <input type="checkbox" name="done" class="form-check-input" id="done" th:field="*{done}">
                         <label class="form-check-label" for="done">Опубликовать</label>
                     </div>
+                    <div>
+                        <br>
+                        <label for="priority.position">Приоритет</label>
+                        <select class="form-control" id="priority.position" name="priority.position">
+                            <option th:each="priority : ${priorities}" th:value="${priority.position}" th:text="${priority.name}"></option>
+                        </select>
+                        <br>
+                        <br>
+                    </div>
                     <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
                 </form>
             </div>
