@@ -28,3 +28,14 @@ ALTER TABLE tasks ADD COLUMN priority_id int
   REFERENCES priorities(id);
 
 UPDATE tasks SET priority_id = (SELECT id FROM priorities WHERE name = 'urgently' LIMIT 1);
+
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR UNIQUE
+);
+
+CREATE TABLE categories_and_tasks (
+    id SERIAL PRIMARY KEY,
+    task_id INT REFERENCES tasks(id),
+    category_id INT REFERENCES categories(id)
+);

@@ -4,19 +4,23 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.todo.exception.NoSpecifyCategory;
 import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.CategoryService;
 import ru.job4j.todo.service.TaskService;
 import ru.job4j.todo.util.GetUserView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
 public class TaskController {
     private final TaskService taskService;
+    private final CategoryService categoryService;
 
     @GetMapping("/index")
     public String index(Model model, HttpSession session) {
@@ -58,16 +62,22 @@ public class TaskController {
     public String addTaskForm(Model model, HttpSession session) {
         GetUserView.getUserView(model, session);
         model.addAttribute("priorities", taskService.findAll());
+        model.addAttribute("categories", categoryService.findAll());
         return "addTaskForm";
     }
 
     @PostMapping("/addTask")
     public String addTask(@ModelAttribute Task task,
+                          @RequestParam(name = "categoryId", required = false) List<Integer> categoriesId,
                           Model model,
                           HttpSession session) {
         GetUserView.getUserView(model, session);
+        if (categoriesId == null) {
+            throw new NoSpecifyCategory("Category is not specified");
+        }
         User user = (User) session.getAttribute("user");
         task.setUser(user);
+        task.setCategories(categoryService.findSomeCategoriesById(categoriesId));
         taskService.add(task);
         return "redirect:index";
     }

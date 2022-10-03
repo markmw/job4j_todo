@@ -91,6 +91,11 @@
                     <th scope="row">
                         <p class="fw-normal" th:text="${task.getPriority().name}"></p>
                     </th>
+                    <th scope="row">
+                        <p th:each="category : ${task.getCategories()}">
+                            <span th:text="${category.getName()}"></span>
+                        </p>
+                    </th>
                 </tr>
                 </tbody>
             </table>

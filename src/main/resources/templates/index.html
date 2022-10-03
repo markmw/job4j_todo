@@ -65,6 +65,7 @@
                 <th scope="col">Дата</th>
                 <th scope="col">Статус</th>
                 <th scope="col">Приоритет</th>
+                <th scope="col">Категория</th>
                 </thead>
                 <tbody>
                 <tr th:each="task : ${allTasks}">
@@ -92,6 +93,11 @@
                     </th>
                     <th scope="row">
                         <p class="fw-normal" th:text="${task.getPriority().getName()}"></p>
+                    </th>
+                    <th scope="row">
+                        <p th:each="category : ${task.getCategories()}">
+                            <span th:text="${category.getName()}"></span>
+                        </p>
                     </th>
                 </tr>
                 </tbody>

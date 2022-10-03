@@ -69,6 +69,12 @@
                     </select>
                     <br>
                     <br>
+                    <label for="categories" class="form-label">Категория</label>
+                    <select class="form-control" id="categories.id" name="categoryId">
+                        <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}" id="categories"></option>
+                    </select>
+                    <br>
+                    <br>
                 </div>
                 <input class="btn btn-info" th:type="submit" th:form="input">
             </form>
