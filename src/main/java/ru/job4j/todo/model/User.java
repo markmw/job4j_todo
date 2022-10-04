@@ -17,6 +17,10 @@ public class User {
     private String login;
     private String password;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
+    @JoinColumn(name = "time_zone_id")
+    private TimeZone timeZone;
+
     public User() {
     }
 

@@ -19,7 +19,7 @@ public class UserStore {
 
     public Optional<User> add(User user) {
         Optional<User> rsl = Optional.empty();
-        crudRepository.run(session -> session.persist(user));
+        crudRepository.run(session -> session.save(user));
         return rsl;
     }
 

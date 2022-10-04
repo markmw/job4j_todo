@@ -79,7 +79,7 @@
                         <p class="fw-normal" th:text="${task.getDescription()}" style="text-align: justify"></p>
                     </th>
                     <th scope="row" style="width: 200px">
-                        <p class="fw-normal text-center" th:text="${#temporals.format(task.getCreated(), 'dd-MM-yyyy HH:mm')}"></p>
+                        <p class="fw-normal text-center" th:text="${#calendars.format(task.getCreated(), 'dd-MM-yyyy HH:mm')}"></p>
                     </th>
                     <th scope="row">
                         <div class="text-center fw-normal">

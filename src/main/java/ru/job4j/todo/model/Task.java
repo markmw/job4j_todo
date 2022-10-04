@@ -3,8 +3,8 @@ package ru.job4j.todo.model;
 import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +17,10 @@ public class Task {
     @Include
     private int id;
     private String description;
-    private LocalDateTime created = LocalDateTime.now();
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Calendar created;
+
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("dd-MM-EEEE-yyyy HH:mm:ss");
     private boolean done;
@@ -34,8 +37,7 @@ public class Task {
     @JoinTable(
             name = "categories_and_tasks",
             joinColumns = {@JoinColumn(name = "task_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")}
-    )
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private List<Category> categories;
 
     public Task() {
@@ -57,11 +59,11 @@ public class Task {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
+    public Calendar getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(Calendar created) {
         this.created = created;
     }
 

@@ -20,14 +20,8 @@ CREATE TABLE priorities (
    position int
 );
 
-INSERT INTO priorities (name, position) VALUES ('urgently', 1);
-INSERT INTO priorities (name, position) VALUES ('normal', 2);
-INSERT INTO priorities (name, position) VALUES ('urgently', 3);
-
 ALTER TABLE tasks ADD COLUMN priority_id int
   REFERENCES priorities(id);
-
-UPDATE tasks SET priority_id = (SELECT id FROM priorities WHERE name = 'urgently' LIMIT 1);
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
@@ -39,3 +33,12 @@ CREATE TABLE categories_and_tasks (
     task_id INT REFERENCES tasks(id),
     category_id INT REFERENCES categories(id)
 );
+
+CREATE TABLE IF NOT EXISTS todo_time_zones
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(20) NOT NULL UNIQUE,
+    utc_offset CHAR(3) NOT NULL
+);
+
+ALTER TABLE todo_user ADD COLUMN time_zone_id INT REFERENCES todo_time_zones(id);

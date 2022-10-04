@@ -1,13 +1,16 @@
 package ru.job4j.todo.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.job4j.todo.model.TimeZone;
 import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.TimeZoneService;
 import ru.job4j.todo.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,15 +21,19 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final TimeZoneService timeZoneService;
 
     @GetMapping("/formAddUser")
-    public String formAddUser() {
+    public String formAddUser(Model model) {
+        model.addAttribute("timezones", timeZoneService.findAll());
         return "addUser";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute User user) {
+    public String registration(@ModelAttribute User user, HttpServletRequest req) {
         Optional<User> regUser = userService.add(user);
+        Optional<TimeZone> timeZone = timeZoneService.findById(Integer.parseInt(req.getParameter("tz.id")));
+        timeZone.ifPresent(user::setTimeZone);
         if (regUser.isEmpty()) {
             return "redirect:/fail";
         }
